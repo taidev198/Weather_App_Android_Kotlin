@@ -1,0 +1,106 @@
+buildscript {
+    apply from: "ktlint.gradle"
+
+}
+
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'io.gitlab.arturbosch.detekt' version '1.22.0-RC2'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { stream ->
+        localProperties.load(stream)
+    }
+}
+
+
+android {
+    namespace 'com.taidev198.weatherapplication'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.taidev198.weatherapplication"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "BASE_API_KEY", "\"${localProperties.getProperty('OPEN_WEATHER_MAP_API_KEY')}\""
+        buildConfigField "String", "GOOGLE_MAPS_API_KEY", "\"${localProperties.getProperty('GOOGLE_MAPS_API_KEY')}\""
+        manifestPlaceholders = [googleMapsApiKey: "${localProperties.getProperty('GOOGLE_MAPS_API_KEY')}"]
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding = true
+        buildConfig=true
+    }
+    buildFeatures {
+        viewBinding = true
+        buildConfig=true
+    }
+}
+
+dependencies {
+
+    implementation libs.androidx.core.ktx.v180
+    implementation libs.androidx.appcompat.v141
+    implementation libs.material.v150
+    implementation libs.androidx.constraintlayout
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit.v113
+    androidTestImplementation libs.androidx.espresso.core.v340
+    implementation libs.play.services.location
+    implementation libs.play.services.maps
+    implementation libs.gson
+    implementation libs.glide
+    implementation libs.lottie
+    // Room
+    implementation libs.androidx.room.ktx
+    implementation libs.androidx.room.runtime
+    implementation libs.androidx.legacy.support.v4
+    implementation libs.androidx.lifecycle.extensions
+    implementation libs.androidx.lifecycle.viewmodel.ktx
+    kapt libs.androidx.room.compiler
+
+    // retrofit
+    implementation libs.retrofit
+    implementation libs.converter.gson
+    implementation libs.retrofit2.kotlin.coroutines.adapter
+    implementation libs.logging.interceptor
+    // ViewModel
+    implementation libs.androidx.lifecycle.extensions
+    implementation libs.androidx.lifecycle.viewmodel.ktx.v270
+    annotationProcessor libs.androidx.lifecycle.compiler
+    // Koin
+    implementation libs.koin.android
+    // coroutines
+    implementation libs.kotlinx.coroutines.core
+    // Rx
+    implementation libs.rxandroid
+    implementation libs.rxjava
+    implementation libs.androidx.room.rxjava2
+    // WorkManager
+    implementation libs.androidx.work.runtime.ktx
+
+}
