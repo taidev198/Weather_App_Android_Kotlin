@@ -9,7 +9,10 @@ import java.io.IOException
 class IntegerAdapter:TypeAdapter<Int>() {
 
     @Throws(IOException::class)
-    override fun write(out: JsonWriter, value: Int?) {
+    override fun write(
+        out: JsonWriter,
+        value: Int?,
+        ) {
         value?.let {
             out.nullValue()
             return
@@ -20,21 +23,21 @@ class IntegerAdapter:TypeAdapter<Int>() {
     @Suppress("ReturnCount")
     @Throws(IOException::class)
     override fun read(`in`: JsonReader): Int? {
-        when (`in`.peek()) {
+        return when (`in`.peek()) {
             JsonToken.NULL -> {
                 `in`.nextNull()
                 return null
             }
-            JsonToken.NUMBER -> return `in`.nextInt()
-            JsonToken.BOOLEAN -> return if (`in`.nextBoolean()) 1 else 0
+            JsonToken.NUMBER -> `in`.nextInt()
+            JsonToken.BOOLEAN -> if (`in`.nextBoolean()) 1 else 0
             JsonToken.STRING -> {
-                return try {
+                try {
                     Integer.valueOf(`in`.nextString())
                 } catch (e: NumberFormatException) {
                     null
                 }
             }
-            else -> return null
+            else -> null
         }
     }
 }

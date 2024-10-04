@@ -8,13 +8,14 @@ import com.taidev198.weatherapplication.data.repository.source.remote.WeatherRem
 import io.reactivex.schedulers.Schedulers.single
 import org.koin.dsl.module
 
-val RepositoryModule = module {
-    single {
-        provideWeatherRepository(
-            WeatherLocalDataSource(get()),
-            WeatherRemoteDataSource(get())
-        )
-    }
+val RepositoryModule =
+    module {
+        single {
+            provideWeatherRepository(
+                WeatherLocalDataSource(get()),
+                WeatherRemoteDataSource(get()),
+            )
+        }
 }
 
 fun provideWeatherRepository(

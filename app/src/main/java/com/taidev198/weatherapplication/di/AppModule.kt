@@ -9,20 +9,22 @@ import com.taidev198.weatherapplication.data.repository.source.remote.api.middle
 import com.taidev198.weatherapplication.data.repository.source.remote.api.middleware.DoubleAdapter
 import com.taidev198.weatherapplication.data.repository.source.remote.api.middleware.IntegerAdapter
 import com.taidev198.weatherapplication.utils.DateTimeUtils
+import com.taidev198.weatherapplication.utils.dispatchers.BaseDispatcherProvider
+import com.taidev198.weatherapplication.utils.dispatchers.DispatcherProvider
 import org.koin.dsl.module
 
-val AppModule = module {
-    single { provideResources(get()) }
+val AppModule =
+    module {
+        single { provideResources(get()) }
 
-    single { provideBaseDispatcherProvider() }
+        single { provideBaseDispatcherProvider() }
 
-    single { provideGson() }
+        single { provideGson() }
 }
 
 fun provideResources(app: Application): Resources {
     return app.resources
 }
-
 
 fun provideBaseDispatcherProvider(): BaseDispatcherProvider {
     return DispatcherProvider()

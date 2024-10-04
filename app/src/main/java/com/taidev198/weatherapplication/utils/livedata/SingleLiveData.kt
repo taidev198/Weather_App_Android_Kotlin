@@ -13,11 +13,14 @@ class SingleLiveData<T> : MutableLiveData<T>() {
     private val pending = AtomicBoolean(false)
 
     @MainThread
-    override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
+    override fun observe(
+        owner: LifecycleOwner,
+        observer: Observer<in T>,
+        ) {
         if (hasActiveObservers()) {
             Log.d(
                 "",
-                "Multiple observers registered but only one will be notified of changes."
+                "Multiple observers registered but only one will be notified of changes.",
             )
         }
 
@@ -28,7 +31,7 @@ class SingleLiveData<T> : MutableLiveData<T>() {
                 if (pending.compareAndSet(true, false)) {
                     observer.onChanged(t)
                 }
-            }
+            },
         )
     }
 
@@ -50,7 +53,7 @@ class SingleLiveData<T> : MutableLiveData<T>() {
 @MainThread
 inline fun <T> LiveData<T>.observeLiveData(
     owner: LifecycleOwner,
-    crossinline onChanged: (T) -> Unit
+    crossinline onChanged: (T) -> Unit,
 ) {
     this.observe(owner, Observer { onChanged(it) })
 }

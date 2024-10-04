@@ -9,12 +9,15 @@ import kotlin.jvm.Throws
 
 class BooleanAdapter: TypeAdapter<Boolean>() {
     @Throws(IOException::class)
-    override fun write(out: JsonWriter?, value: Boolean?) {
+    override fun write(
+        out: JsonWriter,
+        value: Boolean?,
+    ) {
         value?.let {
-            out?.nullValue()
+            out.nullValue()
             return
         }
-        out?.value(value)
+        out.value(value)
     }
 
     @Throws(IOException::class)

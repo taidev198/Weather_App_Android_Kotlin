@@ -1,6 +1,8 @@
 package com.taidev198.weatherapplication.data.model
 
 import com.google.gson.annotations.SerializedName
+import com.taidev198.weatherapplication.data.model.entity.WeatherEntity
+import com.taidev198.weatherapplication.utils.ext.combineWithCountry
 
 data class WeeklyForecast(
     @SerializedName("city") val city: City,
@@ -27,3 +29,29 @@ data class Temp(
     @SerializedName("eve") val eve: Double,
     @SerializedName("morn") val morn: Double,
 )
+
+fun WeeklyForecast.toWeatherEntity(): WeatherEntity {
+    return WeatherEntity(
+        id = city.name.combineWithCountry(city.country),
+        latitude = city.coord.lat,
+        longitude = city.coord.lon,
+        city = city.name,
+        country = city.country,
+        weatherDailyList = forecastList.map { it.toWeatherBasic() },
+        weatherHourlyList = null,
+        weatherCurrent = null,
+    )
+}
+
+fun WeeklyForecastItem.toWeatherBasic(): WeatherBasic {
+    return WeatherBasic(
+        dateTime = dt,
+        currentTemperature = temp.day,
+        maxTemperature = temp.max,
+        minTemperature = temp.min,
+        iconWeather = weather.firstOrNull()?.iconWeather,
+        humidity = humidity,
+        percentCloud = clouds,
+        windSpeed = speed,
+    )
+}

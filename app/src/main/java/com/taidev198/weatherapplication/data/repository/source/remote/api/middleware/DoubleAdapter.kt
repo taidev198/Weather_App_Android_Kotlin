@@ -10,12 +10,15 @@ import kotlin.jvm.Throws
 class DoubleAdapter: TypeAdapter<Double>() {
 
     @Throws(IOException::class)
-    override fun write(out: JsonWriter?, value: Double?) {
+    override fun write(
+        out: JsonWriter,
+        value: Double?,
+    ) {
         value?.let {
-            out?.nullValue()
+            out.nullValue()
             return
         }
-        out?.value(value)
+        out.value(value)
     }
 
     override fun read(`in`: JsonReader?): Double? {

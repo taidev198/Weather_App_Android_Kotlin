@@ -1,6 +1,8 @@
 package com.taidev198.weatherapplication.data.model
 
 import com.google.gson.annotations.SerializedName
+import com.taidev198.weatherapplication.data.model.entity.WeatherEntity
+import com.taidev198.weatherapplication.utils.ext.combineWithCountry
 
 data class CurrentWeather(
     @SerializedName("main")
@@ -64,3 +66,41 @@ data class Sys(
     @SerializedName("country")
     var country: String,
 )
+
+fun CurrentWeather.toWeatherEntity(): WeatherEntity {
+    val country: String? = sys.country
+    val id = cityName.combineWithCountry(country)
+    val latitude = coord.lat
+    val longitude = coord.lon
+    val timeZone = dt
+    val city = cityName
+    val weatherCurrent: WeatherBasic? = this.toWeatherBasic()
+    val weatherHourlyList: List<WeatherBasic>? = null
+    val weatherDailyList: List<WeatherBasic>? = null
+
+    return WeatherEntity(
+        id = id,
+        latitude = latitude,
+        longitude = longitude,
+        timeZone = timeZone,
+        city = city,
+        country = country,
+        weatherCurrent = weatherCurrent,
+        weatherHourlyList = weatherHourlyList,
+        weatherDailyList = weatherDailyList,
+    )
+}
+
+fun CurrentWeather.toWeatherBasic(): WeatherBasic {
+    return WeatherBasic(
+        dateTime = dt,
+        currentTemperature = main.currentTemperature,
+        maxTemperature = main.tempMax,
+        minTemperature = main.tempMin,
+        iconWeather = weathers.firstOrNull()?.iconWeather,
+        weatherDescription = weathers.firstOrNull()?.description,
+        humidity = main.humidity,
+        percentCloud = clouds.percentCloud,
+        windSpeed = wind.windSpeed,
+    )
+}

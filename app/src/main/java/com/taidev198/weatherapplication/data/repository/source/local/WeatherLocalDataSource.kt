@@ -1,56 +1,34 @@
 package com.taidev198.weatherapplication.data.repository.source.local
 
-import com.taidev198.weatherapplication.data.model.CurrentWeather
-import com.taidev198.weatherapplication.data.model.FavouriteLocation
-import com.taidev198.weatherapplication.data.model.HourlyForecast
-import com.taidev198.weatherapplication.data.model.WeeklyForecast
+import com.taidev198.weatherapplication.data.model.Weather
 import com.taidev198.weatherapplication.data.repository.source.WeatherDataSource
 import com.taidev198.weatherapplication.data.repository.source.local.dao.WeatherDAO
 
-class WeatherLocalDataSource(private val weatherDap: WeatherDAO):
-WeatherDataSource.Local{
+class WeatherLocalDataSource(
+    private val weatherDao: WeatherDAO,
+) : WeatherDataSource.Local {
+    override suspend fun insertCurrentWeather(
+        current: Weather,
+        hourly: Weather,
+        daily: Weather,
+    ) {
+        // TODO LATER
+    }
 
-    override suspend fun getSelectedLocation(key: String): String {
+    override suspend fun insertCurrentWeather(weather: Weather) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun isFavouriteLocationExists(cityName: String, countryName: String): Boolean {
+    override suspend fun getAllLocalWeathers(): List<Weather> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getCurrentWeatherLocal() {
+    override suspend fun getLocalWeather(id: String): Weather? {
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveCurrentWeather(currentWeather: CurrentWeather) {
+    override suspend fun deleteWeather(id: String) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getWeeklyForecastLocal(city: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun saveWeeklyForecastLocal(weeklyForecast: WeeklyForecast) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getHourlyForecastLocal(city: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun saveHourlyForecastLocal(hourlyForecast: HourlyForecast) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun insertFavoriteWeather(favouriteLocation: FavouriteLocation) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getAllFavorite(): List<FavouriteLocation> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun removeFavoriteItem(id: Long) {
-        TODO("Not yet implemented")
-    }
 }

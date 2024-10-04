@@ -5,6 +5,7 @@ import com.google.gson.JsonSyntaxException
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.taidev198.weatherapplication.utils.LogUtils
+import com.taidev198.weatherapplication.utils.ext.notNull
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -30,11 +31,13 @@ data class ErrorResponse(
                 return RetrofitException.toNetworkError(throwable)
             }
 
-            // We had non-200 http error
-            if (throwable is HttpException) {
-                val response = throwable.response() ?: return RetrofitException.toUnexpectedError(
-                    throwable
-                )
+            if (
+                throwable is HttpException
+            ) {
+                val response =
+                    throwable.response() ?: return RetrofitException.toUnexpectedError(
+                        throwable,
+                    )
 
                 response.errorBody().notNull {
                     return try {
