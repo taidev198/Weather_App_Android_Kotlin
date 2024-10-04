@@ -19,7 +19,7 @@
         android:configChanges="locale|orientation|screenSize"
         tools:targetApi="31" >
         <activity
-            android:name="com.taidev198.weatherapplication.MainActivity"
+            android:name="com.taidev198.weatherapplication.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

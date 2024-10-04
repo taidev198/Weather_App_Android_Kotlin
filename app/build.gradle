@@ -67,6 +67,7 @@ dependencies {
     implementation libs.androidx.appcompat.v141
     implementation libs.material.v150
     implementation libs.androidx.constraintlayout
+    implementation libs.play.services.vision.common
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit.v113
     androidTestImplementation libs.androidx.espresso.core.v340
