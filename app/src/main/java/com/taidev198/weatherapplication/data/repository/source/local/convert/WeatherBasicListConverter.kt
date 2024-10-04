@@ -8,8 +8,10 @@ import com.taidev198.weatherapplication.data.model.WeatherBasic
 class WeatherBasicListConverter {
 
     @TypeConverter
-    fun fromWeatherBasicList(weatherBasicList: List<WeatherBasic>?): String? {
-        return weatherBasicList?.let { Gson().toJson(it) }
+    fun fromWeatherBasicList(weatherBasicList: List<WeatherBasic>?):
+            String? {
+        return weatherBasicList?.let { Gson().toJson(it)
+        }
     }
 
     @TypeConverter

@@ -12,23 +12,23 @@ class WeatherLocalDataSource(
         hourly: Weather,
         daily: Weather,
     ) {
-        // TODO LATER
+        // TODO Implement later
     }
 
     override suspend fun insertCurrentWeather(weather: Weather) {
-        TODO("Not yet implemented")
+        // TODO Implement later
     }
 
     override suspend fun getAllLocalWeathers(): List<Weather> {
-        TODO("Not yet implemented")
+        return weatherDao.getAllData()
     }
 
     override suspend fun getLocalWeather(id: String): Weather? {
-        TODO("Not yet implemented")
+        return weatherDao.getWeather(id)
     }
 
     override suspend fun deleteWeather(id: String) {
-        TODO("Not yet implemented")
+        // TODO Implement later
     }
 
 }
