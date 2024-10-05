@@ -10,6 +10,8 @@ import com.taidev198.weatherapplication.data.model.entity.WeatherEntity
 import com.taidev198.weatherapplication.databinding.FragmentHomeBinding
 import com.taidev198.weatherapplication.ui.HomeViewModel
 import com.taidev198.weatherapplication.ui.SharedViewModel
+import com.taidev198.weatherapplication.ui.detail.DetailFragment
+import com.taidev198.weatherapplication.ui.search.SearchFragment
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -26,12 +28,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedViewModel.latitude.observe(this) { lat ->
-            lat?.let { latitude = it }
-        }
-        sharedViewModel.longitude.observe(this) { lon ->
-            lon?.let { longitude = it }
-        }
+        sharedViewModel.latitude.value?.let { latitude = it }
+        sharedViewModel.longitude.value?.let { longitude = it }
         fetchWeatherData()
     }
 
@@ -47,6 +45,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 location?.let {
                     fetchWeatherForLocation(it, "vi")
                 }
+            }
+        }
+        binding.constraintLayout.setOnClickListener {
+            cityName?.let {
+                replaceFragment(R.id.fragment_container, DetailFragment.newInstance(it), true)
+            } ?: run {
+                Toast.makeText(context, "City name is not available", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -69,7 +74,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun bindData() {
-        // Todo implement later
+        sharedViewModel.latitude.observe(this) { lat ->
+            lat?.let { latitude = it }
+        }
+        sharedViewModel.longitude.observe(this) { lon ->
+            lon?.let { longitude = it }
+        }
+        sharedViewModel.selectedLocation.observe(viewLifecycleOwner) { location ->
+            location?.let {
+                fetchWeatherForLocation(it, "vi")
+            }
+        }
     }
 
     private fun fetchWeatherData() {

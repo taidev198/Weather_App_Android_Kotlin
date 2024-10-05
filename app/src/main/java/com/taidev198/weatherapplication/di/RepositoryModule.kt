@@ -6,6 +6,7 @@ import com.taidev198.weatherapplication.data.repository.source.WeatherRepository
 import com.taidev198.weatherapplication.data.repository.source.local.WeatherLocalDataSource
 import com.taidev198.weatherapplication.data.repository.source.remote.WeatherRemoteDataSource
 import io.reactivex.schedulers.Schedulers.single
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val RepositoryModule =
@@ -13,7 +14,10 @@ val RepositoryModule =
         single {
             provideWeatherRepository(
                 WeatherLocalDataSource(get()),
-                WeatherRemoteDataSource(get()),
+                WeatherRemoteDataSource(
+                    baseApiService = get(named(BASE_API_SERVICE)),
+                    proApiService = get(named(PRO_API_SERVICE)),
+                ),
             )
         }
 }

@@ -19,7 +19,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             Observer { location ->
                 val (latitude, longitude) = location
                 //pass location to homefragment
-                val homeFragment = HomeFragment.newInstance(latitude, longitude)
+                sharedViewModel.setLocation(latitude, longitude)
+                val homeFragment = HomeFragment.newInstance()
                 setNextFragment(homeFragment)
             },
         )

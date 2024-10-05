@@ -6,15 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.taidev198.weatherapplication.data.model.Weather
+import com.taidev198.weatherapplication.data.model.entity.WeatherEntity
 import com.taidev198.weatherapplication.data.repository.source.local.convert.WeatherBasicConverter
 import com.taidev198.weatherapplication.data.repository.source.local.convert.WeatherBasicListConverter
 import com.taidev198.weatherapplication.data.repository.source.local.dao.WeatherDAO
 
-@Database(
-    entities = [Weather::class],
-    version = 1,
-    exportSchema = false,
-)
+@Database(entities = [WeatherEntity::class], version = 1, exportSchema = false)
 @TypeConverters(WeatherBasicConverter::class, WeatherBasicListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun weatherDao(): WeatherDAO
@@ -25,7 +22,7 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var instance: AppDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase =
+        fun getInstance(context: Context) =
             instance ?: synchronized(this) {
                 instance ?: buildDatabase(context).also { instance = it }
             }
