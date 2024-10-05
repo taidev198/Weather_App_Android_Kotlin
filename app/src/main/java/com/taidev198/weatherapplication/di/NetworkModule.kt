@@ -4,6 +4,10 @@ import android.app.Application
 import com.google.gson.Gson
 import com.taidev198.weatherapplication.data.repository.source.remote.api.ApiService
 import com.taidev198.weatherapplication.utils.Constant
+import com.taidev198.weatherapplication.utils.Constant.BASE_API_SERVICE
+import com.taidev198.weatherapplication.utils.Constant.BASE_RETROFIT
+import com.taidev198.weatherapplication.utils.Constant.PRO_API_SERVICE
+import com.taidev198.weatherapplication.utils.Constant.PRO_RETROFIT
 import io.reactivex.schedulers.Schedulers.single
 import okhttp3.Cache
 import okhttp3.OkHttpClient

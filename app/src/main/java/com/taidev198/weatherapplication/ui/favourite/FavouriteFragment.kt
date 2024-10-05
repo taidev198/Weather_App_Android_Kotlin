@@ -58,8 +58,4 @@ class FavouriteFragment() : BaseFragment<FragmentFavouriteBinding>(FragmentFavou
     companion object {
         fun newInstance() = FavouriteFragment()
     }
-
-    override fun onItemClickListener(view: View, position: Int, action: String) {
-        TODO("Not yet implemented")
-    }
 }

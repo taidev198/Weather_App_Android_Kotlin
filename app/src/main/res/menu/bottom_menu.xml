@@ -6,21 +6,18 @@
         android:id="@+id/mi_home"
         android:title="@string/home"
         android:icon="@drawable/ic_home"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/mi_setting"
         android:title="@string/setting"
         android:icon="@drawable/ic_setting"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/mi_favourite"
         android:title="@string/favourite"
         android:icon="@drawable/ic_favourite"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always" />
 
 </menu>

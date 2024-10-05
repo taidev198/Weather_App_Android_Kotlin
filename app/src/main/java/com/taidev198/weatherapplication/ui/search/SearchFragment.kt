@@ -12,7 +12,6 @@ import com.taidev198.weatherapplication.ui.home.HomeFragment
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
     override val viewModel: SearchViewModel by viewModel()
     override val sharedViewModel: SharedViewModel by activityViewModel()

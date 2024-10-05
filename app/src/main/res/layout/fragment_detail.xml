@@ -93,5 +93,4 @@
         android:layout_marginTop="@dimen/dp_3"
         android:background="@drawable/bg_home_screen" />
 
-
 </LinearLayout>
