@@ -1,9 +1,7 @@
 package com.taidev198.weatherapplication.data.repository
 
 import com.taidev198.weatherapplication.data.model.FavouriteLocation
-import com.taidev198.weatherapplication.data.model.Weather
 import com.taidev198.weatherapplication.data.model.entity.WeatherEntity
-import com.taidev198.weatherapplication.data.model.toWeather
 import com.taidev198.weatherapplication.data.model.toWeatherEntity
 import com.taidev198.weatherapplication.data.repository.source.WeatherDataSource
 import com.taidev198.weatherapplication.data.repository.source.WeatherRepository
@@ -15,40 +13,20 @@ class WeatherRepositoryImpl(
     private val localDataSource: WeatherDataSource.Local,
     private val remoteDataSource: WeatherDataSource.Remote,
 ) : KoinComponent, WeatherRepository {
-    override fun getSelectedLocation(key: String): String {
-        TODO("Not yet implemented")
+    override suspend fun isFavoriteLocationExists(cityName: String): Int {
+        return localDataSource.isFavoriteLocationExists(cityName)
     }
 
-    override fun isFavoriteLocationExists(cityName: String, countryName: String): Boolean {
-        TODO("Not yet implemented")
+    override suspend fun insertFavoriteWeather(favouriteLocation: FavouriteLocation) {
+        localDataSource.insertFavourite(favouriteLocation)
     }
 
-    override fun saveCurrentWeather(currentWeather: WeatherEntity) {
-        TODO("Not yet implemented")
+    override suspend fun getAllFavorite(): List<FavouriteLocation> {
+        return localDataSource.getAllFavourite()
     }
 
-    override fun saveWeeklyForecastLocal(weeklyForecast: WeatherEntity) {
-        TODO("Not yet implemented")
-    }
-
-    override fun getLocalWeather(id: String): Weather? {
-        TODO("Not yet implemented")
-    }
-
-    override fun saveHourlyForecastLocal(hourlyForecast: WeatherEntity) {
-        TODO("Not yet implemented")
-    }
-
-    override fun insertFavoriteWeather(favouriteLocation: FavouriteLocation) {
-        TODO("Not yet implemented")
-    }
-
-    override fun getAllFavorite(): List<FavouriteLocation> {
-        TODO("Not yet implemented")
-    }
-
-    override fun removeFavoriteItem(id: Long) {
-        TODO("Not yet implemented")
+    override suspend fun removeFavoriteItem(id: Long) {
+        localDataSource.removeFavouriteItem(id)
     }
 
     override fun getCurrentWeather(city: String, language: String): Flow<WeatherEntity> {
@@ -69,7 +47,7 @@ class WeatherRepositoryImpl(
 
     override fun getHourlyForecast(city: String, language: String): Flow<WeatherEntity> {
         return flow {
-            emit(remoteDataSource.getHourlyForecast(city, language).toWeather())
+            emit(remoteDataSource.getHourlyForecast(city, language).toWeatherEntity())
         }
     }
 

@@ -22,6 +22,14 @@ class WeatherDataSource {
         suspend fun getLocalWeather(id: String): WeatherEntity?
 
         suspend fun deleteWeather(id: String)
+
+        suspend fun insertFavourite(favourite: FavouriteLocation)
+
+        suspend fun getAllFavourite(): List<FavouriteLocation>
+
+        suspend fun removeFavouriteItem(favouriteId: Long)
+
+        suspend fun isFavoriteLocationExists(cityName: String): Int
     }
 
     interface Remote {
