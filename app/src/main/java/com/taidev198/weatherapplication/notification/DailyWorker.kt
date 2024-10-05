@@ -40,16 +40,17 @@ class DailyWorker(context: Context, workerParameters: WorkerParameters) :
                 val fusedLocationClient =
                     LocationServices.getFusedLocationProviderClient(applicationContext)
 
-                val location = suspendCoroutine { continuation ->
-                    fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                        continuation.resume(location)
-                    }.addOnFailureListener { _ ->
-                        continuation.resume(null)
+                val location =
+                    suspendCoroutine { continuation ->
+                        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                            continuation.resume(location)
+                        }.addOnFailureListener { _ ->
+                            continuation.resume(null)
+                        }
                     }
-                }
 
                 if (location != null) {
-                    fetchWeather(repository, location,"vi")
+                    fetchWeather(repository, location, "vi")
                 }
             } catch (e: IOException) {
                 Log.e("DailyWorker", "Exception occurred: $e")
@@ -61,17 +62,18 @@ class DailyWorker(context: Context, workerParameters: WorkerParameters) :
     private suspend fun fetchWeather(
         repository: WeatherRepository,
         currentLocation: Location?,
-        language: String
+        language: String,
     ) {
         currentLocation?.let { currentLocation ->
             CoroutineScope(Dispatchers.Default).launch {
-                val currentDeferred = async {
-                    repository.getCurrentLocationWeather(
-                        currentLocation.latitude,
-                        currentLocation.longitude,
-                        language
-                    )
-                }
+                val currentDeferred =
+                    async {
+                        repository.getCurrentLocationWeather(
+                            currentLocation.latitude,
+                            currentLocation.longitude,
+                            language,
+                        )
+                    }
                 val data = currentDeferred.await().singleOrNull()
 
                 val location = data?.getLocation()
@@ -92,41 +94,49 @@ class DailyWorker(context: Context, workerParameters: WorkerParameters) :
     }
 
     @SuppressLint("MissingPermission")
-    private fun showNotification(title: String, content: String) {
-        val intent = Intent(applicationContext, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
+    private fun showNotification(
+        title: String,
+        content: String,
+    ) {
+        val intent =
+            Intent(applicationContext, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
 
-        val pendingIntent = PendingIntent.getActivity(
-            applicationContext,
-            0,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE
-        )
+        val pendingIntent =
+            PendingIntent.getActivity(
+                applicationContext,
+                0,
+                intent,
+                PendingIntent.FLAG_IMMUTABLE,
+            )
 
-        val notification = NotificationCompat.Builder(
-            applicationContext,
-            CHANNEL_ID
-        )
-            .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle(title)
-            .setContentText(content)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
+        val notification =
+            NotificationCompat.Builder(
+                applicationContext,
+                CHANNEL_ID,
+            )
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelName = CHANNEL_NAME
             val channelDescription = CHANNEL_DESCRIPTION
             val channelImportance = NotificationManager.IMPORTANCE_HIGH
 
-            val channel = NotificationChannel(CHANNEL_ID, channelName, channelImportance).apply {
-                description = channelDescription
-            }
+            val channel =
+                NotificationChannel(CHANNEL_ID, channelName, channelImportance).apply {
+                    description = channelDescription
+                }
 
-            val notificationManager = applicationContext.getSystemService(
-                Context.NOTIFICATION_SERVICE
-            ) as NotificationManager
+            val notificationManager =
+                applicationContext.getSystemService(
+                    Context.NOTIFICATION_SERVICE,
+                ) as NotificationManager
 
             notificationManager.createNotificationChannel(channel)
         }

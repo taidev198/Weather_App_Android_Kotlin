@@ -21,6 +21,7 @@ class HomeViewModel(
     private val weatherRepository: WeatherRepository,
     application: Application,
 ) : AndroidViewModel(application) {
+
     var currentWeather = MutableLiveData<WeatherEntity>()
     private var isLoading = MutableLiveData<Boolean>()
     var errorMessage = MutableLiveData<String>()
@@ -63,6 +64,7 @@ class HomeViewModel(
             }
         }
     }
+
     fun addFavouriteLocation() {
         val context = getApplication<Application>().applicationContext
         currentWeather.value?.let { weather ->
@@ -71,11 +73,12 @@ class HomeViewModel(
 
             viewModelScope.launch {
                 val cnt =
-                    countryName?.let {
+                    cityName?.let {
                         weatherRepository.isFavoriteLocationExists(it)
                     }
                 if (cnt != null) {
                     if (cnt > 0) {
+                        Log.d("LCD", "So luong tp $cityName trong db: $cnt")
                         Toast.makeText(context, context.getString(R.string.already_favorite, cityName), Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(

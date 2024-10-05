@@ -9,6 +9,7 @@ import com.taidev198.weatherapplication.base.BaseFragment
 import com.taidev198.weatherapplication.databinding.FragmentFavouriteBinding
 import com.taidev198.weatherapplication.ui.FavouriteViewModel
 import com.taidev198.weatherapplication.ui.SharedViewModel
+import com.taidev198.weatherapplication.ui.detail.DetailFragment.Companion.MY_TAG
 import com.taidev198.weatherapplication.utils.ext.goBackFragment
 import com.taidev198.weatherapplication.utils.listener.OnItemClickListener
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
@@ -45,7 +46,7 @@ class FavouriteFragment() : BaseFragment<FragmentFavouriteBinding>(FragmentFavou
         }
 
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
-            Log.v("FavouriteFragment", "Error: $errorMessage")
+            Log.v(MY_TAG, "Error: $errorMessage")
         }
     }
 
