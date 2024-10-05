@@ -17,6 +17,7 @@ import com.google.android.gms.location.LocationServices
 import com.taidev198.weatherapplication.R
 import com.taidev198.weatherapplication.data.repository.source.WeatherRepository
 import com.taidev198.weatherapplication.ui.MainActivity
+import com.taidev198.weatherapplication.utils.ext.unixTimestampToDateTimeString
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

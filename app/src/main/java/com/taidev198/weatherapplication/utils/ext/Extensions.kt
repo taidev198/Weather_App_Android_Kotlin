@@ -14,7 +14,7 @@ fun String?.combineWithCountry(country: String?): String {
     return "$this$country"
 }
 
-fun Int.unixTimestampToDateTimeString(): String {
+fun Long.unixTimestampToDateTimeString(): String {
     try {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = this * 1000.toLong()
@@ -28,6 +28,7 @@ fun Int.unixTimestampToDateTimeString(): String {
 
     return this.toString()
 }
+
 
 fun Int.unixTimestampToDateYearString(): String {
     try {

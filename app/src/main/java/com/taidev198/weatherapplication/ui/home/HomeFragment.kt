@@ -12,6 +12,7 @@ import com.taidev198.weatherapplication.ui.HomeViewModel
 import com.taidev198.weatherapplication.ui.SharedViewModel
 import com.taidev198.weatherapplication.ui.detail.DetailFragment
 import com.taidev198.weatherapplication.ui.search.SearchFragment
+import com.taidev198.weatherapplication.utils.ext.replaceFragment
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.text.SimpleDateFormat
 import java.util.Date

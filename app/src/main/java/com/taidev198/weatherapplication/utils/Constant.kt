@@ -1,5 +1,7 @@
 package com.taidev198.weatherapplication.utils
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.taidev198.weatherapplication.BuildConfig
 
 object Constant {
@@ -25,6 +27,62 @@ object Constant {
     const val PRO_API_SERVICE = "proApiService"
     const val BASE_RETROFIT = "baseRetrofit"
     const val PRO_RETROFIT = "proRetrofit"
+    const val DAILY_WORK_MANAGER_ID = "daily_id"
     const val LANGUAGE_CODE_VIETNAMESE = "vi"
     const val LANGUAGE_CODE_ENGLISH = "en"
+}
+
+object SharedPrefManager {
+    private const val SHARE_PREFERENCES_NAME = "SHARE_PREFERENCES"
+    private lateinit var sharedPreferences: SharedPreferences
+
+    fun init(context: Context) {
+        sharedPreferences = context.getSharedPreferences(SHARE_PREFERENCES_NAME, Context.MODE_PRIVATE)
+    }
+
+    fun getString(
+        key: String,
+        defaultValue: String?,
+    ): String? {
+        return sharedPreferences.getString(key, defaultValue)
+    }
+
+    fun putString(
+        key: String,
+        value: String,
+    ) {
+        sharedPreferences.edit().putString(key, value).apply()
+    }
+
+    fun getFloat(
+        key: String,
+        defaultValue: Float,
+    ): Float {
+        return sharedPreferences.getFloat(key, defaultValue)
+    }
+
+    fun putFloat(
+        key: String,
+        value: Float,
+    ) {
+        sharedPreferences.edit().putFloat(key, value).apply()
+    }
+
+    fun getInt(
+        key: String,
+        defaultValue: Int,
+    ): Int {
+        return sharedPreferences.getInt(key, defaultValue)
+    }
+
+    fun putInt(
+        key: String,
+        value: Int,
+    ) {
+        sharedPreferences.edit().putInt(key, value).apply()
+    }
+
+    fun contains(key: String): Boolean {
+        return sharedPreferences.contains(key)
+    }
 }

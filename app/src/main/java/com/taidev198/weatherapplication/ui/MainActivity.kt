@@ -53,7 +53,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.mi_home -> setNextFragment(HomeFragment.newInstance())
-                R.id.mi_favorite -> setNextFragment(FavouriteFragment.newInstance())
+                R.id.mi_favourite -> setNextFragment(FavouriteFragment.newInstance())
             }
             true
         }

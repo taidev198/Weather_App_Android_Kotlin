@@ -9,6 +9,7 @@ import com.taidev198.weatherapplication.databinding.FragmentSearchBinding
 import com.taidev198.weatherapplication.ui.SearchViewModel
 import com.taidev198.weatherapplication.ui.SharedViewModel
 import com.taidev198.weatherapplication.ui.home.HomeFragment
+import com.taidev198.weatherapplication.utils.ext.replaceFragment
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

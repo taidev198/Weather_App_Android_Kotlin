@@ -9,6 +9,7 @@ import com.taidev198.weatherapplication.base.BaseFragment
 import com.taidev198.weatherapplication.databinding.FragmentDetailBinding
 import com.taidev198.weatherapplication.ui.DetailViewModel
 import com.taidev198.weatherapplication.ui.SharedViewModel
+import com.taidev198.weatherapplication.utils.ext.goBackFragment
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat

@@ -9,6 +9,7 @@ import com.taidev198.weatherapplication.base.BaseFragment
 import com.taidev198.weatherapplication.databinding.FragmentFavouriteBinding
 import com.taidev198.weatherapplication.ui.FavouriteViewModel
 import com.taidev198.weatherapplication.ui.SharedViewModel
+import com.taidev198.weatherapplication.utils.ext.goBackFragment
 import com.taidev198.weatherapplication.utils.listener.OnItemClickListener
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
