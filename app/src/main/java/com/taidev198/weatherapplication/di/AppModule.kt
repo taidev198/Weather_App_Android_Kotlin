@@ -1,29 +1,36 @@
 package com.taidev198.weatherapplication.di
 
 import android.app.Application
+import android.content.Context
 import android.content.res.Resources
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.taidev198.weatherapplication.data.repository.source.local.AppDatabase
 import com.taidev198.weatherapplication.data.repository.source.remote.api.middleware.BooleanAdapter
 import com.taidev198.weatherapplication.data.repository.source.remote.api.middleware.DoubleAdapter
 import com.taidev198.weatherapplication.data.repository.source.remote.api.middleware.IntegerAdapter
 import com.taidev198.weatherapplication.utils.DateTimeUtils
 import com.taidev198.weatherapplication.utils.dispatchers.BaseDispatcherProvider
 import com.taidev198.weatherapplication.utils.dispatchers.DispatcherProvider
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val AppModule =
     module {
         single { provideResources(get()) }
-
         single { provideBaseDispatcherProvider() }
-
+        single { provideAppDatabase(androidContext()) }
+        factory { get<AppDatabase>().weatherDao() }
         single { provideGson() }
 }
 
 fun provideResources(app: Application): Resources {
     return app.resources
+}
+
+fun provideAppDatabase(context: Context): AppDatabase {
+    return AppDatabase.getInstance(context)
 }
 
 fun provideBaseDispatcherProvider(): BaseDispatcherProvider {

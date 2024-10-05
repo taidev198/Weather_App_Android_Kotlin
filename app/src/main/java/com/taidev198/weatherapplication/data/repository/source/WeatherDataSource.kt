@@ -5,20 +5,21 @@ import com.taidev198.weatherapplication.data.model.FavouriteLocation
 import com.taidev198.weatherapplication.data.model.HourlyForecast
 import com.taidev198.weatherapplication.data.model.Weather
 import com.taidev198.weatherapplication.data.model.WeeklyForecast
+import com.taidev198.weatherapplication.data.model.entity.WeatherEntity
 
 class WeatherDataSource {
     interface Local {
         suspend fun insertCurrentWeather(
-            current: Weather,
-            hourly: Weather,
-            daily: Weather,
+            current: WeatherEntity,
+            hourly: WeatherEntity,
+            daily: WeatherEntity,
         )
 
-        suspend fun insertCurrentWeather(weather: Weather)
+        suspend fun insertCurrentWeather(weather: WeatherEntity)
 
-        suspend fun getAllLocalWeathers(): List<Weather>
+        suspend fun getAllLocalWeathers(): List<WeatherEntity>
 
-        suspend fun getLocalWeather(id: String): Weather?
+        suspend fun getLocalWeather(id: String): WeatherEntity?
 
         suspend fun deleteWeather(id: String)
     }

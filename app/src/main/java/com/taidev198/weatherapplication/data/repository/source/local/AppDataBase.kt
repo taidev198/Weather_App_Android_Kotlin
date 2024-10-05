@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.taidev198.weatherapplication.data.model.Weather
 import com.taidev198.weatherapplication.data.repository.source.local.convert.WeatherBasicConverter
 import com.taidev198.weatherapplication.data.repository.source.local.convert.WeatherBasicListConverter
-import com.taidev198.weatherapplication.data.repository.source.local.dao.WeatherDao
+import com.taidev198.weatherapplication.data.repository.source.local.dao.WeatherDAO
 
 @Database(
     entities = [Weather::class],
@@ -17,7 +17,7 @@ import com.taidev198.weatherapplication.data.repository.source.local.dao.Weather
 )
 @TypeConverters(WeatherBasicConverter::class, WeatherBasicListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun weatherDao(): WeatherDao
+    abstract fun weatherDao(): WeatherDAO
 
     companion object {
         private const val DB_NAME = "Weather.db"

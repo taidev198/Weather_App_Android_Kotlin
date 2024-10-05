@@ -1,79 +1,79 @@
 package com.taidev198.weatherapplication.data.model
 
-import com.google.gson.annotations.SerializedName
+import com.google.gson.annotations.Expose
 import com.taidev198.weatherapplication.data.model.entity.WeatherEntity
 import com.taidev198.weatherapplication.utils.ext.combineWithCountry
 
 data class CurrentWeather(
-    @SerializedName("main")
-    var main: Main,
-    @SerializedName("weather")
-    var weathers: List<Weather>,
-    @SerializedName("wind")
-    var wind: Wind,
-    @SerializedName("clouds")
-    var clouds: Clouds,
-    @SerializedName("cood")
-    var coord: Coord,
-    @SerializedName("dt")
-    var dt: Long,
-    @SerializedName("name")
-    var cityName: String,
-    @SerializedName("sys")
-    var sys: Sys,
+    @Expose
+    var main: Main? = null,
+    @Expose
+    var weathers: List<Weather>? = null,
+    @Expose
+    var wind: Wind? = null,
+    @Expose
+    var clouds: Clouds? = null,
+    @Expose
+    var coord: Coord? = null,
+    @Expose
+    var dt: Long? = null,
+    @Expose
+    var cityName: String? = null,
+    @Expose
+    var sys: Sys? = null,
     var day: String = "",
     var iconWeather: String = "",
 )
 
 data class Main(
-    @SerializedName("temp")
-    var  currentTemperature: Double,
-    @SerializedName("humidity")
-    var humidity: Int,
-    @SerializedName("temp_min")
-    var tempMin: Double,
-    @SerializedName("temp_max")
-    var tempMax: Double,
+    @Expose
+    var  currentTemperature: Double? = null,
+    @Expose
+    var humidity: Int? = null,
+    @Expose
+    var tempMin: Double? = null,
+    @Expose
+    var tempMax: Double? = null,
 )
 
 data class Weather(
-    @SerializedName("icon")
-    var iconWeather: String,
-    @SerializedName("main")
-    var main: String,
-    @SerializedName("description")
-    var description: String,
+    @Expose
+    var iconWeather: String? = null,
+    @Expose
+    var main: String? = null,
+    @Expose
+    var description: String? = null,
 )
 
 data class Wind(
-    @SerializedName("speed")
-    var windSpeed: Double,
+    @Expose
+    var windSpeed: Double? = null,
 )
 
 data class Clouds(
-    @SerializedName("all")
-    var percentCloud: Int,
+    @Expose
+    var percentCloud: Int? = null,
 )
 
 data class Coord(
-    @SerializedName("lon")
-    var lon: Double,
-    @SerializedName("lat")
-    var lat: Double,
+    @Expose
+    var lon: Double? = null,
+    @Expose
+    var lat: Double? = null,
 )
 
 data class Sys(
-    @SerializedName("country")
-    var country: String,
+    @Expose
+    var country: String? = null,
 )
 
 fun CurrentWeather.toWeatherEntity(): WeatherEntity {
-    val country: String? = sys.country
-    val id = cityName.combineWithCountry(country)
-    val latitude = coord.lat
-    val longitude = coord.lon
-    val timeZone = dt
-    val city = cityName
+    val country: String = sys?.country ?: "Unknown"
+    val id = cityName?.combineWithCountry(country) ?: "Unknown"
+    val latitude = coord?.lat ?: 0.0
+    val longitude = coord?.lon ?: 0.0
+    val timeZone = dt ?: 0
+    val city = cityName ?: "Unknown"
     val weatherCurrent: WeatherBasic? = this.toWeatherBasic()
     val weatherHourlyList: List<WeatherBasic>? = null
     val weatherDailyList: List<WeatherBasic>? = null
@@ -91,16 +91,20 @@ fun CurrentWeather.toWeatherEntity(): WeatherEntity {
     )
 }
 
-fun CurrentWeather.toWeatherBasic(): WeatherBasic {
-    return WeatherBasic(
-        dateTime = dt,
-        currentTemperature = main.currentTemperature,
-        maxTemperature = main.tempMax,
-        minTemperature = main.tempMin,
-        iconWeather = weathers.firstOrNull()?.iconWeather,
-        weatherDescription = weathers.firstOrNull()?.description,
-        humidity = main.humidity,
-        percentCloud = clouds.percentCloud,
-        windSpeed = wind.windSpeed,
-    )
+fun CurrentWeather.toWeatherBasic(): WeatherBasic? {
+    return if (main != null && weathers?.isNotEmpty() == true && wind != null && clouds != null) {
+        WeatherBasic(
+            dateTime = dt ?: 0,
+            currentTemperature = main?.currentTemperature ?: 0.0,
+            maxTemperature = main?.tempMax ?: 0.0,
+            minTemperature = main?.tempMin ?: 0.0,
+            iconWeather = weathers?.firstOrNull()?.iconWeather,
+            weatherDescription = weathers?.firstOrNull()?.description,
+            humidity = main?.humidity ?: 0,
+            percentCloud = clouds?.percentCloud ?: 0,
+            windSpeed = wind?.windSpeed ?: 0.0,
+        )
+    } else {
+        null
+    }
 }
