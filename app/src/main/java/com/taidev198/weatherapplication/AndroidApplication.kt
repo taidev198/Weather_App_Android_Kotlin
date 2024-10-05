@@ -11,7 +11,8 @@ import org.koin.android.ext.koin.androidFileProperties
 import org.koin.core.context.startKoin
 
 class AndroidApplication : Application() {
-    private val rootModule = listOf(AppModule, NetworkModule, DataSourceModule, RepositoryModule, ViewModelModule)
+    private val rootModule =
+        listOf(AppModule, NetworkModule, DataSourceModule, RepositoryModule, ViewModelModule)
     override fun onCreate() {
         super.onCreate()
 

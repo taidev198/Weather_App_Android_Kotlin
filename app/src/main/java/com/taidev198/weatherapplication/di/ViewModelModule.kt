@@ -12,4 +12,5 @@ val ViewModelModule: Module =
         viewModel { MainViewModel(get()) }
         viewModel { SharedViewModel() }
         viewModel { HomeViewModel(get()) }
+        viewModel { SearchViewModel(get()) }
 }
